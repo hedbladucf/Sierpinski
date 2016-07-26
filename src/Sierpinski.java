@@ -1,9 +1,26 @@
+/*
+* 	Oscar Hedblad 
+* 	COP 3330, Howework 5b (Sierpinski Trangles)
+*	Arup Ghosh
+*
+*	DESCRIPTION: Program that using GUI's creates a canvas then draws 
+*					 triangles on it. It firsts asks the user to enter the
+*					 recursive depth. Once entered it draws five trangles, 
+*					 and they all can be changed to be of different color. 
+*					 The program also has a "randomize color" function that
+*					 allows the user to let the program randomly decide 
+*					 what color the triangles get drawn in.
+*
+*/
 
+
+/* Imports the needed */
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-//Enum of the colors that are to be put into the Combo Boxes
-enum Cnum{
+
+/* Enumerator that holds all colors that will be put into the combo boxes */
+enum allColors{
 	GRAY("Gray", Color.GRAY),
 	BLUE("Blue", Color.BLUE),
 	RED("Red", Color.RED),
@@ -14,10 +31,11 @@ enum Cnum{
 	DARKGRAY("Dark Gray", Color.DARK_GRAY),
 	ORANGE("Orange", Color.ORANGE);
 	
+	
+/* Declaration */
 	public String Colors;
 	private Color Selected;
-
-	private Cnum(String Colors, Color Selected){
+	private allColors(String Colors, Color Selected){
 	this.Colors = Colors;
 	this.Selected = Selected;
 	}
@@ -30,7 +48,8 @@ enum Cnum{
 }
 
 class Sierpinski implements ActionListener{
-	//Declaring variables
+
+/* Declaration of various variables */
 	private JFrame window;
 	private JButton draw;
 	private Canvas canvas;
@@ -41,7 +60,8 @@ class Sierpinski implements ActionListener{
 	private JPanel ComboCheckBox;
 	private JCheckBox CheckBox;
 	private boolean CheckBoxChoice=false;
-	//Will be used when using the randomized color feature
+	
+/* Comes into use when using the "randomize color" function */
 	Color Col1=Color.getHSBColor((float)Math.random(),1.0f,1.0f);
 	Color Col2=Color.getHSBColor((float)Math.random(),1.0f,1.0f);
 	Color Col3=Color.getHSBColor((float)Math.random(),1.0f,1.0f);
@@ -52,23 +72,20 @@ class Sierpinski implements ActionListener{
 	
 		window = new JFrame("Sierpinski Visulizer");
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//window.setLayout(new FlowLayout());
 		window.setSize(750, 550);
 		window.setResizable(false);
-	
-		//JPanel grid = new JPanel(new GridLayout(1,2));
 		JPanel grid = new JPanel(new FlowLayout());
-		//Adds canvas to the frame
+		
+/* Puts canvas to the frame */
 		canvas = new Canvas();
 		canvas.setBackground(Color.black);
 		
 		canvas.setSize(512, 512);
 		grid.add(canvas);
-		//Creating a grid for the right side of the GUI
+		
+/* Generates grid for right side of GUI */
 		JPanel RightGrid = new JPanel(new GridLayout(8,1));
-		//Adding 
 		JPanel TextLabFlow = new JPanel(new FlowLayout());
-	
 		TextLabFlow.add(new JLabel("Recursion Depth:"));
 		Depth = new JTextField(4);
 		TextLabFlow.add(Depth);
@@ -76,41 +93,46 @@ class Sierpinski implements ActionListener{
 		
 		JPanel Color1 = new JPanel(new FlowLayout());
 		Color1.add(new JLabel("Color 1"));
-		//add combobox
-		ColorList1 = new JComboBox(Cnum.values());
+		
+/* Generates first Combo Box */
+		ColorList1 = new JComboBox(allColors.values());
 		Color1.add(ColorList1);
 		RightGrid.add(Color1);
 		
 		JPanel Color2 = new JPanel(new FlowLayout());
 		Color2.add(new JLabel("Color 2"));
-		//add combobox
-		ColorList2 = new JComboBox(Cnum.values());
+
+/* Generates second Combo Box */
+		ColorList2 = new JComboBox(allColors.values());
 		Color2.add(ColorList2);
 		RightGrid.add(Color2);
 	
 		JPanel Color3 = new JPanel(new FlowLayout());
 		Color3.add(new JLabel("Color 3"));
-		//add combobox
-		ColorList3 = new JComboBox(Cnum.values());
+		
+/* Generates third Combo Box */
+		ColorList3 = new JComboBox(allColors.values());
 		Color3.add(ColorList3);
 		RightGrid.add(Color3);
 	
 		JPanel Color4 = new JPanel(new FlowLayout());
 		Color4.add(new JLabel("Color 4"));
-		//add combobox
-		ColorList4 = new JComboBox(Cnum.values());
+		
+/* Generates forth Combo Box */
+		ColorList4 = new JComboBox(allColors.values());
 		Color4.add(ColorList4);
 		RightGrid.add(Color4);
 	
 		JPanel Color5 = new JPanel(new FlowLayout());
 		Color5.add(new JLabel("Color 5"));
-		//add combobox
-		ColorList5 = new JComboBox(Cnum.values());
+		
+/* Generates fifth Combo Box */
+		ColorList5 = new JComboBox(allColors.values());
 		Color5.add(ColorList5);
 		RightGrid.add(Color5);
 	
 		ComboCheckBox = new JPanel();
-		CheckBox = new JCheckBox("Randomize colors at each level");
+		CheckBox = new JCheckBox("Randomizes colors at each level");
 		ComboCheckBox.add(CheckBox);
 		RightGrid.add(ComboCheckBox);
 		CheckBox.addActionListener(this);
@@ -144,7 +166,7 @@ class Sierpinski implements ActionListener{
 			//If the user does not want random colors, this will get their choice from the Combo box
 			if(CheckBoxChoice==false){
 				//Gets their desired color choice and sets it to the correct depth
-				Cnum UserColChoice = (Cnum)ColorList1.getSelectedItem();
+				allColors UserColChoice = (allColors)ColorList1.getSelectedItem();
 				Color CSelect = UserColChoice.getColor();
 				triangle.setColor(CSelect);
 			}
@@ -158,7 +180,7 @@ class Sierpinski implements ActionListener{
 			//If the user does not want random colors, this will get their choice from the Combo box
 			if(CheckBoxChoice==false){
 				//Gets their desired color choice and sets it to the correct depth
-				Cnum UserColChoice = (Cnum)ColorList2.getSelectedItem();
+				allColors UserColChoice = (allColors)ColorList2.getSelectedItem();
 				Color CSelect = UserColChoice.getColor();
 				triangle.setColor(CSelect);
 			}
@@ -172,7 +194,7 @@ class Sierpinski implements ActionListener{
 			//If the user does not want random colors, this will get their choice from the Combo box
 			if(CheckBoxChoice==false){
 				//Gets their desired color choice and sets it to the correct depth
-				Cnum UserColChoice = (Cnum)ColorList3.getSelectedItem();
+				allColors UserColChoice = (allColors)ColorList3.getSelectedItem();
 				Color CSelect = UserColChoice.getColor();
 				triangle.setColor(CSelect);
 			}
@@ -186,7 +208,7 @@ class Sierpinski implements ActionListener{
 			//If the user does not want random colors, this will get their choice from the Combo box
 			if(CheckBoxChoice==false){
 				//Gets their desired color choice and sets it to the correct depth
-				Cnum UserColChoice = (Cnum)ColorList4.getSelectedItem();
+				allColors UserColChoice = (allColors)ColorList4.getSelectedItem();
 				Color CSelect = UserColChoice.getColor();
 				triangle.setColor(CSelect);
 			}
@@ -200,7 +222,7 @@ class Sierpinski implements ActionListener{
 			//If the user does not want random colors, this will get their choice from the Combo box
 			if(CheckBoxChoice==false){
 				//Gets their desired color choice and sets it to the correct depth
-				Cnum UserColChoice = (Cnum)ColorList5.getSelectedItem();
+				allColors UserColChoice = (allColors)ColorList5.getSelectedItem();
 				Color CSelect = UserColChoice.getColor();
 				triangle.setColor(CSelect);
 			}
@@ -242,7 +264,7 @@ class Sierpinski implements ActionListener{
 			 }
 			 //If the user enters an depth that is larger than 10, it will show a message informing them that the depth is too large
 			 else{
-			 JOptionPane.showMessageDialog(null, "The entered depth has to be a number that is no greater than 10!!!");
+			 JOptionPane.showMessageDialog(null, "The depth cannot exceed 10!");
 			 Depth.setText("");
 			 
 			 }
